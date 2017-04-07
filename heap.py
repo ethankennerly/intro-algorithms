@@ -36,5 +36,14 @@ def heapsort(aList):
         maxHeapify(aList, 0, index)
 
 
+def popMaxHeap(maxHeap):
+    largest = maxHeap[0]
+    last = maxHeap.pop()
+    if 2 <= len(maxHeap):
+        maxHeap[0] = last
+        maxHeapify(maxHeap, 0)
+    return largest
+
+
 if '__main__' == __name__:
     printSortArgs(heapsort)
