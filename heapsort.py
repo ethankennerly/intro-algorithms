@@ -1,3 +1,6 @@
+from sortargs import printSortArgs
+
+
 def maxHeapify(aList, index, heapSize = -1):
     if -1 == heapSize:
         heapSize = len(aList)
@@ -33,13 +36,5 @@ def heapsort(aList):
         maxHeapify(aList, 0, index)
 
 
-def printHeapsort(aList):
-    print('Sorting as strings, from:\n    %r' % aList)
-    heapsort(aList)
-    print('to:\n    %r' % aList)
-
-
 if '__main__' == __name__:
-    from sys import argv
-    aList = argv[1:]
-    printHeapsort(aList)
+    printSortArgs(heapsort)

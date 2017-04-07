@@ -9,7 +9,7 @@ Usage:
 Simulating command line example:
 
     >>> from heapsort import *
-    >>> printHeapsort(['c', 'a', 'b'])
+    >>> printSortArgs(heapsort, ['c', 'a', 'b'])
     Sorting as strings, from:
         ['c', 'a', 'b']
     to:
