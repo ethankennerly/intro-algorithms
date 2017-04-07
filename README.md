@@ -10,7 +10,7 @@ Simulating command line example:
 
     >>> from heapsort import *
     >>> printSortArgs(heapsort, ['c', 'a', 'b'])
-    Sorting as strings, from:
+    Sorting from:
         ['c', 'a', 'b']
     to:
         ['a', 'b', 'c']
