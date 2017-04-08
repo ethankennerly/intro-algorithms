@@ -45,5 +45,17 @@ def popMaxHeap(maxHeap):
     return largest
 
 
+def increaseMaxHeap(maxHeap, index, nextValue):
+    if nextValue < maxHeap[index]:
+        raise Error('Expected %r less than %r' % (
+            nextValue, maxHeap[index]))
+    maxHeap[index] = nextValue
+    parent = (index - 1) >> 1
+    while maxHeap[parent] < maxHeap[index]:
+        maxHeap[parent], maxHeap[index] = maxHeap[index], maxHeap[parent]
+        index = parent
+        parentIndex = (index - 1) >> 1
+
+
 if '__main__' == __name__:
     printSortArgs(heapsort)

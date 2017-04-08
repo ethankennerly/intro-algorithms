@@ -39,6 +39,11 @@ class TestHeap(TestCase):
         self.assertEquals(popMaxHeap(maxHeap), 6)
         self.assertEquals(maxHeap, [3, 2, 1, 0])
 
+    def testIncreaseMaxHeap(self):
+        maxHeap = [6, 2, 3, 0, 1]
+        increaseMaxHeap(maxHeap, 2, 7)
+        self.assertEquals(maxHeap, [7, 2, 6, 0, 1])
+
 
 if '__main__' == __name__:
     main()
