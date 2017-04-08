@@ -1,6 +1,3 @@
-from sortargs import printSortArgs
-
-
 def maxHeapify(aList, index, heapSize = -1):
     if -1 == heapSize:
         heapSize = len(aList)
@@ -50,6 +47,10 @@ def increaseMaxHeap(maxHeap, index, nextValue):
         raise Error('Expected %r less than %r' % (
             nextValue, maxHeap[index]))
     maxHeap[index] = nextValue
+    maySwapWithAncestors(maxHeap, index)
+
+
+def maySwapWithAncestors(maxHeap, index):
     parent = (index - 1) >> 1
     while maxHeap[parent] < maxHeap[index]:
         maxHeap[parent], maxHeap[index] = maxHeap[index], maxHeap[parent]
@@ -57,5 +58,12 @@ def increaseMaxHeap(maxHeap, index, nextValue):
         parentIndex = (index - 1) >> 1
 
 
+def insertMaxHeap(maxHeap, value):
+    index = len(maxHeap)
+    maxHeap.append(value)
+    maySwapWithAncestors(maxHeap, index)
+
+
 if '__main__' == __name__:
+    from sortargs import printSortArgs
     printSortArgs(heapsort)

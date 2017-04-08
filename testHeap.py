@@ -44,6 +44,16 @@ class TestHeap(TestCase):
         increaseMaxHeap(maxHeap, 2, 7)
         self.assertEquals(maxHeap, [7, 2, 6, 0, 1])
 
+    def testIncreaseMaxHeap(self):
+        maxHeap = [4]
+        increaseMaxHeap(maxHeap, 0, 8)
+        self.assertEquals(maxHeap, [8])
+
+    def testInsertMaxHeap(self):
+        maxHeap = [6, 2, 3, 0, 1]
+        insertMaxHeap(maxHeap, 4)
+        self.assertEquals(maxHeap, [6, 2, 4, 0, 1, 3])
+
 
 if '__main__' == __name__:
     main()

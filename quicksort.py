@@ -1,6 +1,3 @@
-from sortargs import printSortArgs
-
-
 def quicksort(aList):
     begin = 0
     end = len(aList) - 1
@@ -22,4 +19,6 @@ def quicksort(aList):
 
 
 if '__main__' == __name__:
+    from sortargs import printSortArgs
+
     printSortArgs(quicksort)

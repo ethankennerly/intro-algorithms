@@ -8,6 +8,7 @@ Usage:
 
 Simulating command line example:
 
+    >>> from sortargs import printSortArgs
     >>> from heap import *
     >>> printSortArgs(heapsort, ['c', 'a', 'b'])
     Sorting from:
