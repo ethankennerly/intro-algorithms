@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 
-from countingsort import countingSort
+from countingsort import *
 
 
 class TestCountingSort(TestCase):
@@ -12,6 +12,16 @@ class TestCountingSort(TestCase):
     def testCountingSortDuplicate(self):
         integers = [0, 3, 2, 0]
         countingSort(integers)
+        self.assertEquals(integers, [0, 0, 2, 3])
+
+    def testCountingSortSimpleEmpty(self):
+        integers = []
+        countingSortSimple(integers)
+        self.assertEquals(integers, [])
+
+    def testCountingSortSimpleDuplicate(self):
+        integers = [0, 3, 2, 0]
+        countingSortSimple(integers)
         self.assertEquals(integers, [0, 0, 2, 3])
 
     def testCountingSortMixedTypeError(self):
