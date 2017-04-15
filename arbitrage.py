@@ -4,7 +4,7 @@ def isArbitrage(exchangeRateMatrix, roundingError = 0.00001):
 
     isArbitrage function returns if there is a path of exchanges that yields a profit.
     If the exchange rate graph has a sink currency, that can be exchanged to with varying efficiency,
-    this is also detected.
+    this is not detected.
     By sink currency, I mean a currency that cannot be exchanged from.
 
     exchangeRateMatrix:  Weighted directed adjacency matrix.
