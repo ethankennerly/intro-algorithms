@@ -1,4 +1,4 @@
-def isArbitrage(exchangeRateMatrix, roundingError = 0.00001):
+def isArbitrage(exchangeRateMatrix, roundingError = 0.00001, isVerbose = False):
     """
     Abitrage: Profiting from discrepancies in exchange rate.
 
@@ -12,43 +12,56 @@ def isArbitrage(exchangeRateMatrix, roundingError = 0.00001):
 
     Answering question 24-3 on page 679.
 
+    isVerbose:  Returns if discrepant values and all values.
+
     Strategy:
+    Dynamically program reachable nodes and values.
     From each node in a graph,
     travel along non-zero edges until complete or cycle.
     Along each step multiply value.
     At each cycle, if the value is greater than starting value, there is an opportunity for arbitrage.
+    There is no opportunity for arbitrage if the destination node cannot reach the source node.
+
+    If the graph is sparsely connected, then an adjacency list would scale quicker than an adjacency matrix.
+    O(v^2) > O(ve) if e is small.
     """
     nodeCount = len(exchangeRateMatrix)
     nodes = range(nodeCount)
     tolerance = 1.0 + roundingError
-    for startNode in nodes:
-        startValue = 1.0
-        values = [0.0] * nodeCount
-        currentValue = startValue
-        visits = [0] * nodeCount
-        values[startNode] = currentValue
-        nodeStack = [startNode]
+    reachableMatrix = [[False for _ in nodes] for _ in nodes]
+    values = [[0.0 for _ in nodes] for _ in nodes]
+    discrepantDestinations = []
+    for source in nodes:
+        values[source][source] = 1.0
+        nodeStack = [source]
         while nodeStack:
             previous = nodeStack.pop()
-            if 2 == visits[previous]:
-                continue
-            visits[previous] = 2
             for next in nodes:
                 rate = exchangeRateMatrix[previous][next]
                 if not rate:
                     continue
-                currentValue = rate * values[previous]
-                if visits[next] \
-                and not isEqual(currentValue, values[next], tolerance):
-                    return True
-                if not visits[next]:
-                    visits[next] = 1
-                    values[next] = currentValue
+                nextValue = rate * values[source][previous]
+                isVisited = reachableMatrix[source][next]
+                sourceValue = values[source][next]
+                if isVisited \
+                and not isEqual(nextValue, sourceValue, tolerance):
+                    discrepantDestinations.append((source, previous, next,
+                        nextValue, sourceValue))
+                if not isVisited:
+                    values[source][next] = nextValue
+                    reachableMatrix[source][next] = True
                     nodeStack.append(next)
+                isVisited = reachableMatrix[source][previous] = True
+    for source, previous, destination, nextValue, sourceValue in discrepantDestinations:
+        if reachableMatrix[destination][source]:
+            if isVerbose:
+                return discrepantDestinations, values, nextValue, sourceValue
+            else:
+                return True
     return False
 
 
-def isEqual(currentValue, startValue, tolerance = 1.0001):
-    return (currentValue == startValue) \
-        or ((currentValue / tolerance) \
-            < startValue < (currentValue * tolerance))
+def isEqual(nextValue, sourceValue, tolerance = 1.0001):
+    return (nextValue == sourceValue) \
+        or ((nextValue / tolerance) \
+            < sourceValue < (nextValue * tolerance))
