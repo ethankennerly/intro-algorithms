@@ -10,11 +10,11 @@ class TestArbitrage(TestCase):
         self.assertEqual(isArbitrage(rates), False)
 
     def testIsArbitrageOne(self):
-        rates = ((1.0))
+        rates = ((1.0,),)
         self.assertEqual(isArbitrage(rates), False)
 
     def testIsArbitrageSelf(self):
-        rates = ((2.0))
+        rates = ((2.0,),)
         self.assertEqual(isArbitrage(rates), True)
 
     def testIsArbitrageTwo(self):
@@ -22,7 +22,7 @@ class TestArbitrage(TestCase):
                  (0.5, 1.0))
         self.assertEqual(isArbitrage(rates), False)
 
-    def testIsArbitrageOneWay(self):
+    def testIsArbitrageDirected(self):
         rates = ((1.0, 1.0),
                  (2.0, 1.0))
         self.assertEqual(isArbitrage(rates), True)
@@ -33,10 +33,40 @@ class TestArbitrage(TestCase):
                  (0.4,  0.2,  1.0))
         self.assertEqual(isArbitrage(rates), False)
 
-    def testIsArbitrageThreeBypass(self):
+    def testIsArbitrageBypassThird(self):
         rates = ((1.0,  0.5,  1.0),
                  (2.0,  1.0,  4.0),
                  (1.0,  0.25, 1.0))
+        self.assertEqual(isArbitrage(rates), True)
+
+    def testIsArbitrageBypassSecond(self):
+        rates = ((1.0,  1.0,  0.5),
+                 (1.0,  1.0,  1.0),
+                 (2.0,  1.0,  1.0))
+        self.assertEqual(isArbitrage(rates), True)
+
+    def testIsArbitrageSink(self):
+        rates = ((1.0,  0.5,  1.0),
+                 (2.0,  1.0,  4.0),
+                 (0.0,  0.0,  1.0))
+        self.assertEqual(isArbitrage(rates), True)
+
+    def testIsArbitrageBridge(self):
+        rates = ((1.0,  0.5,  0.0),
+                 (2.0,  1.0,  4.0),
+                 (0.0,  0.25, 1.0))
+        self.assertEqual(isArbitrage(rates), False)
+
+    def testIsArbitrageRounded(self):
+        rates = ((1.0,  0.5,  2.50000001),
+                 (2.0,  1.0,  5.0),
+                 (0.4,  0.2,  1.0))
+        self.assertEqual(isArbitrage(rates), False)
+
+    def testIsArbitrageSmall(self):
+        rates = ((1.0,  0.5,  2.501),
+                 (2.0,  1.0,  5.0),
+                 (0.4,  0.2,  1.0))
         self.assertEqual(isArbitrage(rates), True)
 
 
