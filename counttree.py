@@ -14,7 +14,7 @@ def countSmallerToTheRight(values):
     length = len(values)
     counts = [0] * length
     indexes = range(length - 2, -1, -1)
-    root = CountTreeNode(values[0])
+    root = CountTreeNode(values[-1])
     for index in indexes:
         value = values[index]
         child = insert(root, value)
