@@ -48,10 +48,10 @@ def insert(root, value):
 
 def countSmaller(newChild):
     count = 0
+    child = newChild
     smaller = child.children[0]
     if smaller:
         count += smaller.numDescendents
-    child = newChild
     parent = child.parent
     while parent:
         isGreater = parent.children[1] == child
