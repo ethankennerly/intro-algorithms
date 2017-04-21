@@ -55,7 +55,7 @@ def countSmaller(newChild):
     parent = child.parent
     while parent:
         isGreater = parent.children[1] == child
-        isEqual = parent.value == child.value
+        isEqual = parent.value == newChild.value
         if isGreater:
             count += 1
         if isGreater or isEqual:
