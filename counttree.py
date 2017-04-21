@@ -55,8 +55,10 @@ def countSmaller(newChild):
     parent = child.parent
     while parent:
         isGreater = parent.children[1] == child
+        isEqual = parent.value == child.value
         if isGreater:
             count += 1
+        if isGreater or isEqual:
             smaller = parent.children[0]
             if smaller:
                 count += smaller.numDescendents
